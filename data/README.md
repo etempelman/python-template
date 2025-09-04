@@ -5,10 +5,12 @@ This directory is intended for storing datasets used in development, testing, an
 
 ## Recommended Structure
 
+``` text
 data/
 ├── raw/ # Original, immutable data (never edited manually)
 ├── processed/ # Cleaned, transformed, or preprocessed datasets
 └── external/ # Data from third-party sources or APIs
+```
 
 ## Guidelines
 
@@ -20,6 +22,7 @@ data/
 ## Example
 
 If you had a dataset `users.csv` from a public API:
+```
 data/
 ├── raw/
 │ └── users.csv # original download
@@ -27,3 +30,4 @@ data/
 │ └── users_clean.csv # cleaned version (scripts applied)
 └── external/
 └── users_schema.json # metadata / schema definition
+```
