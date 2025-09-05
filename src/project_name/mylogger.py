@@ -16,6 +16,7 @@ def trace(self, message, *args, **kwargs):
 
 logging.Logger.trace = trace  # Add trace method to all loggers
 
+
 # --- 2. Filters for console/file routing ---
 class ConsoleOnlyFilter(logging.Filter):
     def filter(self, record):
@@ -69,10 +70,10 @@ def init_logger(
     # --- Timed rotating file handler ---
     fh = TimedRotatingFileHandler(
         filename=log_path,
-        when=rotation,          # "midnight" = rotate daily
-        interval=1,             # rotate every interval
+        when=rotation,  # "midnight" = rotate daily
+        interval=1,  # rotate every interval
         backupCount=backup_count,  # keep N old logs
-        encoding="utf-8"
+        encoding="utf-8",
     )
     fh.setLevel(file_level)
     fh.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
@@ -91,8 +92,12 @@ def init_logger(
 def log_function_call(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        logger.trace(f"Entering {func.__name__} with args={args}, kwargs={kwargs}", extra={"target": "file"})
+        logger.trace(
+            f"Entering {func.__name__} with args={args}, kwargs={kwargs}",
+            extra={"target": "file"},
+        )
         result = func(*args, **kwargs)
         logger.trace(f"{func.__name__} returned {result}", extra={"target": "file"})
         return result
+
     return wrapper
