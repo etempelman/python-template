@@ -1,29 +1,82 @@
-[tool.hatch.envs.default]
-dependencies = [
-    "pytest>=7.0",
-    "pytest-cov>=4.0",
-    "ruff>=0.1.0",
-    "mypy>=1.0",
-    "black>=23.0",
+[build-system]
+requires = ["hatchling>=1.20.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "project_name"  # replace with your package name
+version = "0.1.0"
+description = "A short description of project_name"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Your Name", email = "you@example.com" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Operating System :: OS Independent",
 ]
 
-[tool.hatch.envs.default.scripts]
-test = "pytest {args:tests}"
-coverage = "pytest --cov=src --cov-report=term-missing --cov-report=html {args:tests}"
-lint = [
-    "ruff check .",
-    "black --check .",
-    "mypy .",
+dependencies = [
+  # Example: "requests>=2.31.0"
 ]
-lint-fix = [
-    "ruff check --fix .",
-    "black .",
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+  "ruff>=0.0.290",
+  "black>=23.0",
+  "mypy>=1.0",
+  "coverage[toml]>=7.0",
 ]
-clean = [
-    "rm -rf build/ dist/ *.egg-info/ .pytest_cache/ htmlcov/ .coverage",
-    "find . -type d -name __pycache__ -exec rm -rf {} +",
-    "find . -type f -name '*.pyc' -delete",
-]
-format = "lint-fix"
-check = ["lint", "test"]
-build = "python -m build"
+
+[project.urls]
+Homepage = "https://github.com/etempelman/project_name"
+Repository = "https://github.com/etempelman/project_name"
+Issues = "https://github.com/etempelman/project_name/issues"
+Documentation = "https://github.com/etempelman/project_name/docs"
+
+[tool.hatch.version]
+path = "src/project_name/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/project_name"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310", "py311"]
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "B"]
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_configs = true
+strict = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+strict = false
+
+[tool.coverage.run]
+branch = true
+source = ["src/project_name"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "--verbose --capture=tee-sys"
+testpaths = ["tests"]
