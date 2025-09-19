@@ -34,7 +34,7 @@ $ source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 ```
 ## 3. Install dependencies
 
-You’ll need just installed. On macOS/Linux:
+You’ll need just installed:
 ```bash
 brew install just    # macOS (Homebrew)
 sudo apt install just # Ubuntu/Debian
