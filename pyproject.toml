@@ -1,0 +1,29 @@
+[tool.hatch.envs.default]
+dependencies = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "black>=23.0",
+]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+coverage = "pytest --cov=src --cov-report=term-missing --cov-report=html {args:tests}"
+lint = [
+    "ruff check .",
+    "black --check .",
+    "mypy .",
+]
+lint-fix = [
+    "ruff check --fix .",
+    "black .",
+]
+clean = [
+    "rm -rf build/ dist/ *.egg-info/ .pytest_cache/ htmlcov/ .coverage",
+    "find . -type d -name __pycache__ -exec rm -rf {} +",
+    "find . -type f -name '*.pyc' -delete",
+]
+format = "lint-fix"
+check = ["lint", "test"]
+build = "python -m build"
