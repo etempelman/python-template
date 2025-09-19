@@ -1,6 +1,18 @@
 # python-template
 This repository provides a flexible and opinionated Python project template designed to help you start new projects quickly while following best practices. It includes a recommended directory structure, default configuration files, and tooling integrations for packaging, testing, linting, documentation, and reproducibility.
 
+---
+
+## Features
+- **PEP 621** compliant `pyproject.toml` with [Hatchling](https://hatch.pypa.io/latest/)  
+- Centralized tool configs (`black`, `ruff`, `isort`, `mypy`, `pytest`, `coverage`)  
+- [Just](https://github.com/casey/just) for developer automation (like `make`, but simpler)  
+- `src/` layout for clean package structure  
+- `.env.example` for environment variable management  
+- MIT-licensed
+
+---
+
 # Getting Started
 
 Follow these steps to set up the project for development.
@@ -10,6 +22,11 @@ Follow these steps to set up the project for development.
 $ git clone https://github.com/etempelman/python-template.git
 $ cd project-name
 ```
+Replace placeholder names:
+- Update pyproject.toml → set project name, description, authors, URLs
+- Rename src/project_name/ → to your actual package name
+- Adjust README.md
+
 ## 2. Create a virtual environment
 ```bash
 $ python3 -m venv .venv
@@ -17,14 +34,17 @@ $ source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 ```
 ## 3. Install dependencies
 
-Install runtime dependencies:
+You’ll need just installed. On macOS/Linux:
 ```bash
-$ make install
+brew install just    # macOS (Homebrew)
+sudo apt install just # Ubuntu/Debian
+winget install --id Casey.Just # Windows (PowerShell)
 ```
-Install development dependencies (for testing, linting, and coverage):
+Then install project dependencies:
 ```bash
-$ make install-dev
+just install
 ```
+
 ## 4. Configure environment variables
 
 - Copy `.env.example` to `.env` and edit values if needed:
@@ -39,96 +59,43 @@ LOG_FILE=app.log
 
 - The default environment is `dev`. You can change it to `test`, `stage`, or `prod`.
 
-## 6. Update `setup.cfg` if necessary
-
-- Add new runtime dependencies under `[options] install_requires`.
-- Add new development dependencies under `[options.extras_require] dev`.
-- Your Makefile and pip installation commands will automatically pick them up.
-
-## 7. Run the project and tests
-
-- Run tests:
+## 5. Common tasks with just
 ```bash
-$ make test
-```
-- Run app:
-```bash
-$ make run
-```
-- Run coverage report:
-```bash
-$ make coverage
-```
-- Run Ruff linting:
-```bash
-$ make lint
-```
-- Automatically fix lint issues:
-```bash
-$ make lint-fix
-```
-- Clean cache and build artifacts:
-```bash
-$ make clean
-```
-## Notes
-
-- Using a virtual environment ensures that dependencies are isolated from your system Python.
-- The Makefile centralizes common tasks to keep development consistent.
-- VS Code extensions for Ruff, Black, and mypy will automatically integrate with your workflow.
-
-## Makefile
-
-This project includes a `Makefile` to simplify common development tasks. All commands should be run from the **root of the repository**.
-
-### Install dependencies
-
-Install runtime dependencies:
-
-```bash
-make install
+just            # list all available commands
+just install    # install project + dev dependencies
+just test       # run tests with pytest
+just coverage   # run tests with coverage report
+just lint       # check code style with ruff
+just lint-fix   # auto-fix linting issues (ruff + black)
+just format     # format code (black + isort)
+just build      # build wheel & sdist via hatch
+just publish    # publish to PyPI (requires credentials)
+just clean      # remove build/test artifacts
 ```
 
-Install development dependencies (including pytest, Ruff, and coverage):
-
+---
+# Project Structure
 ```bash
-make install-dev
+python-template/
+├── data/
+├── logs/
+├── notebooks/
+├── src/
+│   └── project_name/
+├── tests/
+├── .env.example
+├── .gitignore
+├── LICENSE
+├── README.md
+├── pyproject.toml
 ```
-
-### Run tests
-
-Run all unit tests with pytest:
-
-```bash
-make test
-```
-
-Run tests and generate a coverage report (both console and HTML):
-
-```bash
-make coverage
-```
-
-The HTML coverage report will be generated in the htmlcov/ directory.
-
-### Linting
-
-Check code with Ruff:
-
-```bash
-make lint
-```
-
-Automatically fix issues where possible:
-
-```bash
-make lint-fix
-```
-
-### Cleaning
-
-Remove Python cache, build artifacts, and coverage reports:
-
-```bash
-make clean
-```
+- src/project_name/ → main package placeholder
+- tests/ → test suite
+- data/ → optional data storage
+- logs/ → log files directory
+- notebooks/ → optional notebooks
+- .env.example → template for environment variables
+- .gitignore → git ignore rules
+- LICENSE → MIT license
+- README.md → project documentation
+- pyproject.toml → project metadata and build configuration
